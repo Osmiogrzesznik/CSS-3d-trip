@@ -79,10 +79,10 @@ elements.forEach((element, i, arr) => {
     let r2 = randomBetween(-50, 50)
     let r3 = randomBetween(-50, 50)
     let r4 = randomBetween(-50, 50)
-    let startTranslate3dStr = ` translate3d(${r*sz}px, ${r2*sz}px, ${- totalDistance*2}px)`
-    let endTranslate3dStr = ` translate3d(${r3*sz}px, ${r4*sz}px, ${totalDistance*2}px)`
-    rs = [rN(0.5 * sz), rN(1 * sz), rN(0.2 * sz), randomBetween(-50 * sz, 50 * sz)].join()
-    rs2 = [rN(0.5 * sz), rN(1 * sz), rN(0.2 * sz), randomBetween(-50 * sz, 50 * sz)].join()
+    let startTranslate3dStr = ` translate3d(${r*sz}px, ${r2*sz}px, ${- totalDistance*8}px)`
+    let endTranslate3dStr = ` translate3d(${r3*sz}px, ${r4*sz}px, ${totalDistance*8}px)`
+    rs = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
+    rs2 = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
 
     let startRotStr = ` rotate3d(${rs}deg) `
     let endRotStr = ` rotate3d(${rs2}deg) `
@@ -100,25 +100,12 @@ elements.forEach((element, i, arr) => {
 
             opacity: 0.1,
             offset: 0.3,
-        }, {
-
-            opacity: midOpacity,
-            offset: 0.60,
-        }, {
-
+        },
+        {
             opacity: midOpacity,
             offset: 0.65,
         },
         {
-
-            opacity: 0,
-            offset: 0.75,
-        },
-        {
-
-            // opacity: startOpacity,
-            // offset: 0
-
             transform: endTransfStr,
             // transform: startTransfStr,
             opacity: endOpacity,
@@ -126,7 +113,7 @@ elements.forEach((element, i, arr) => {
         }
     ]
 
-    keyframesAll.push(keyframes)
+    keyframesAll.push(keyframes);
     element.animate(keyframes, {
         // timing options
         duration: 400 * (amnt + 1),
