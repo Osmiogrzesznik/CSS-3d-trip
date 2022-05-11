@@ -16,6 +16,7 @@ function say(...xx) {
 }
 var elements = [];
 var elements = Array.from(document.querySelectorAll(".ws"));
+var intro = Array.from(document.querySelectorAll(".title2"));
 var oneElemDistance = 100
 var totalDistance = elements.length * oneElemDistance
 // var commonStr = `translate(-50%, -50%) perspective(${totalDistance}px)`
@@ -61,64 +62,104 @@ function rN(m) {
 
 
 var keyframesAll = [];
-elements.forEach((element, i, arr) => {
+intro.forEach((element, i, arr) => {
     let sz = els_szs[i]
-
     let amnt = arr.length
-
-    let startOpacity = 0
-    let width = element.offsetWidth
-    let height = element.offsetHeight
-
-    let midOpacity = 1
-    let endOpacity = 0
-    //original messy
-    // let startTranslate3dStr = ` translate3d(${0*i*50}px, 0, ${(- totalDistance + (i*oneElemDistance ) )}px)`
-    // let endTranslate3dStr = ` translate3d(${0*i*50}px, 0, ${totalDistance + (i*oneElemDistance) }px)`
-    let r = randomBetween(-50, 50)
-    let r2 = randomBetween(-50, 50)
-    let r3 = randomBetween(-50, 50)
-    let r4 = randomBetween(-50, 50)
-    let startTranslate3dStr = ` translate3d(${r*sz}px, ${r2*sz}px, ${- totalDistance*8}px)`
-    let endTranslate3dStr = ` translate3d(${r3*sz}px, ${r4*sz}px, ${totalDistance*8}px)`
-    rs = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
-    rs2 = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
-
-    let startRotStr = ` rotate3d(${rs}deg) `
-    let endRotStr = ` rotate3d(${rs2}deg) `
-    let startTransfStr = commonStr + startTranslate3dStr + startRotStr
-    let endTransfStr = commonStr + endTranslate3dStr + endRotStr
-
-    let keyframes = [
-        // keyframes
-        {
-            transform: startTransfStr,
-            opacity: startOpacity,
-            // offset: 0
-        },
-        {
-
-            opacity: 0.1,
-            offset: 0.3,
-        },
-        {
-            opacity: midOpacity,
-            offset: 0.65,
-        },
-        {
-            transform: endTransfStr,
-            // transform: startTransfStr,
-            opacity: endOpacity,
-            // offset: 0.99,
-        }
-    ]
-
-    keyframesAll.push(keyframes);
-    element.animate(keyframes, {
+    let duration = 2000 * amnt
+    element.animate({
+        opacity: [0, 1, 0],
+        filter: ['blur(5px)', 'blur(0px)', 'blur(5px)']
+    }, {
         // timing options
-        duration: 400 * (amnt + 1),
-        delay: 400 * (i - 1),
-        iterations: Infinity,
+        duration: duration,
+        delay: duration * (i),
+        iterations: 1,
         easing: 'ease-in'
     });
 })
+
+function animateWarp() {
+
+    elements.forEach((element, i, arr) => {
+        let sz = els_szs[i]
+
+        let amnt = arr.length
+
+        let startOpacity = 0
+        let width = element.offsetWidth
+        let height = element.offsetHeight
+
+        let midOpacity = 1
+        let endOpacity = 0
+        //original messy
+        // let startTranslate3dStr = ` translate3d(${0*i*50}px, 0, ${(- totalDistance + (i*oneElemDistance ) )}px)`
+        // let endTranslate3dStr = ` translate3d(${0*i*50}px, 0, ${totalDistance + (i*oneElemDistance) }px)`
+        let r = randomBetween(-50, 50)
+        let r2 = randomBetween(-50, 50)
+        let r3 = randomBetween(-50, 50)
+        let r4 = randomBetween(-50, 50)
+        let startTranslate3dStr = ` translate3d(${r*sz}px, ${r2*sz}px, ${- totalDistance*8}px)`
+
+        let endTranslate3dStr = ` translate3d(${r3*sz}px, ${r4*sz}px, ${totalDistance*8}px)`
+        rs = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
+        rs2 = [rN(0.2 * sz), rN(.2 * sz), rN(0.2 * sz), randomBetween(-30 * sz, 30 * sz)].join()
+
+        let startRotStr = ` rotate3d(${rs}deg) `
+        let endRotStr = ` rotate3d(${rs2}deg) `
+        let startTransfStr = commonStr + startTranslate3dStr + startRotStr
+        let endTransfStr = commonStr + endTranslate3dStr + endRotStr
+
+        let keyframes = [
+            // keyframes
+            {
+                transform: startTransfStr,
+                opacity: startOpacity,
+                // offset: 0
+            },
+            {
+
+                opacity: 0.1,
+                offset: 0.3,
+                filter: 'blur(0px)'
+            },
+            {
+                opacity: midOpacity,
+                offset: 0.50,
+                filter: 'blur(0px)'
+            },
+            {
+                opacity: midOpacity,
+                offset: 0.53,
+                filter: 'blur(3px)'
+            },
+            {
+                opacity: 0,
+                offset: 0.56,
+                filter: 'blur(5px)'
+            },
+            {
+                opacity: 0,
+                offset: 0.57,
+                filter: 'blur(0px)'
+            },
+            {
+                transform: endTransfStr,
+                // transform: startTransfStr,
+                opacity: endOpacity,
+                // offset: 0.99,
+            }
+        ]
+
+        keyframesAll.push(keyframes);
+        element.animate(keyframes, {
+            // timing options
+            duration: 500 * (amnt),
+            delay: 500 * (i),
+            iterations: Infinity,
+            easing: 'ease-in'
+        });
+    })
+
+}
+
+animateWarp()
